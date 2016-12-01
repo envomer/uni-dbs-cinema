@@ -12,9 +12,11 @@ class DB
 		$this->connect();
 	}
 
+    /**
+     * Connect to database
+     */
 	public function connect()
 	{
-		// establish database connection
 		$this->connection = oci_connect($this->dbUser, $this->dbPass, $this->dbName);
 		if (!$this->connection) {
 			echo "Unable to connect to database";
@@ -22,6 +24,12 @@ class DB
 		}
 	}
 
+    /**
+     * Execute sql query
+     *
+     * @param $sql
+     * @return resource
+     */
 	public function execute($sql)
 	{
 		$stmt = oci_parse($this->connection, $sql);
@@ -29,6 +37,11 @@ class DB
   		return $stmt;
 	}
 
+    /**
+     * Perform sql statement
+     *
+     * @param $statement
+     */
 	public function insert($statement)
 	{
 		$insert = oci_parse($this->connection, $statement);
@@ -37,7 +50,6 @@ class DB
 		$conn_err = oci_error($this->connection);
 		$insert_err = oci_error($insert);
 		if(!$conn_err && !$insert_err){
-			// inserted
 			oci_free_statement($insert);
 			header('Location: '.$_SERVER['PHP_SELF']);
 			die;
@@ -50,6 +62,12 @@ class DB
 		}
 	}
 
+    /**
+     * Get all movies
+     *
+     * @param null $search
+     * @return resource
+     */
 	public function movieGetAll($search = null)
 	{
 		if( ! $search ) {
@@ -66,6 +84,11 @@ class DB
 		return $this->execute($command);
 	}
 
+    /**
+     * Save movie
+     *
+     * @param $movie
+     */
 	public function movieSave($movie)
 	{
 		$movie = (object) $movie;
