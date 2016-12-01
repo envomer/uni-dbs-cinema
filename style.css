@@ -1,0 +1,25 @@
+body, html {
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background: #eee;
+	font-size: 13px;
+}
+
+.text-right {
+	text-align: right;
+}
+
+.container {
+	margin: 20px auto;
+	background: #fff;
+	padding: 20px;
+}
+
+.count {
+	font-size: 11px;
+	margin: 10px 0 50px;
+	color: #777;
+	text-align: center;
+}
