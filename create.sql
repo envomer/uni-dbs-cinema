@@ -81,6 +81,7 @@ CREATE TABLE tickets (
   movie_slot_id NUMBER(20) NOT NULL,
   employee_id NUMBER(20) NOT NULL,
   customer_id NUMBER(20) NOT NULL,
+  price NUMBER(20) DEFAULT 0,
   PRIMARY KEY (id),
   CONSTRAINT ticket_fk_slot_id FOREIGN KEY (movie_slot_id) REFERENCES movie_slots (id) ON DELETE CASCADE,
   CONSTRAINT ticket_fk_employee_id FOREIGN KEY (employee_id) REFERENCES employees (id) ON DELETE CASCADE,

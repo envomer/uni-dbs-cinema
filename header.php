@@ -18,12 +18,12 @@
           <a href="#" class="brand-logo right">Cinema</a>
           <ul id="nav-mobile" class="left hide-on-med-and-down">
             <li><a href="index.php">Tickets</a></li>
+            <li><a href="employees.php">Angesteller</a></li>
+            <li><a href="customers.php">Kunde</a></li>
+            <li><a href="movie_slots.php">Veranstaltung</a></li>
             <li><a href="movies.php">Movies</a></li>
-            <li><a href="employees.php">Employees</a></li>
-            <li><a href="customers.php">Customers</a></li>
-            <li><a href="movie_slots.php">Movie slots</a></li>
-            <li><a href="rooms.php">Rooms</a></li>
-            <li><a href="cinemas.php">Cinemas</a></li>
+            <li><a href="rooms.php">Raum</a></li>
+            <li><a href="cinemas.php">Kino</a></li>
           </ul>
         </div>
       </nav>

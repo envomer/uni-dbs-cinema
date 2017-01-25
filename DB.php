@@ -358,7 +358,7 @@ class DB
 						ORDER BY r.id DESC';
 		}
 		else {
-			$command = 'SELECT t.*, m.title AS movies_title, cp.name AS customer_name
+			$command = 'SELECT t.*, m.title AS movie_title, cp.name AS customer_name
 						FROM tickets t
 						LEFT JOIN movie_slots ms ON t.movie_slot_id = ms.id
 						LEFT JOIN movies m ON m.id = ms.movie_id
@@ -372,6 +372,29 @@ class DB
 		}
 
 		return $this->select($command);
+	}
+
+	/**
+     * Save ticket
+     *
+     * @param $ticket
+     */
+	public function ticketSave($ticket)
+	{
+		$ticket = (object) $ticket;
+
+		$ticket = array(
+			'customer_id' => isset($ticket->customer_id) ? "{$ticket->customer_id}" : '',
+			'employee_id' => isset($ticket->employee_id) ? "{$ticket->employee_id}" : '',
+			'movie_slot_id' => isset($ticket->movie_slot_id) ? "{$ticket->movie_slot_id}" : '',
+			'price' => isset($ticket->price) ? "{$ticket->price}" : '',
+			'seat' => isset($ticket->seat) ? "{$ticket->seat}" : '',
+			'row_nr' => isset($ticket->row_nr) ? "{$ticket->row_nr}" : '',
+		);
+
+		$sql = 'INSERT INTO tickets ('.(implode(array_keys($ticket), ',')).') VALUES ('.(implode(',', $ticket)).')';
+
+		$this->execute($sql);
 	}
 
 }
