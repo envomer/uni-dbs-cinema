@@ -35,7 +35,7 @@ include 'header.php';
 		<form class="col s12" method="POST" action="<?php echo $_SERVER['PHP_SELF'] ?>">
 			<div class="input-field col s12">
 				<?php echo $cinemaSelect ?>
-				<label for="movie">Cinema</label>
+				<label for="cinema">Cinema</label>
 			</div>
 			<div class="input-field col s12">
 				<input name="room[name]" id="name" type="text" class="validate" required>

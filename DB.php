@@ -168,10 +168,36 @@ class DB
 						ORDER BY c.id DESC';
 		}
 		else {
-			$command = "SELECT * FROM employees ORDER BY id DESC";
+			$command = "SELECT e.*, p.name, p.street, p.zip, p.city
+						FROM employees e
+						LEFT JOIN persons p ON p.id = e.person_id
+						ORDER BY e.id DESC";
 		}
 
 		return $this->select($command);
+	}
+
+	/**
+     * Save employee
+     *
+     * @param $employee
+     */
+	public function employeeSave($employee)
+	{
+		$employee = (object) $employee;
+
+		$this->personSave($employee);
+
+		$employee = array(
+			'phone' => isset($employee->phone) ? "'{$employee->phone}'" : '',
+			'social_security_nr' => isset($employee->social_security_nr) ? "'{$employee->social_security_nr}'" : '',
+			'cinema_id' => isset($employee->cinema_id) ? "'{$employee->cinema_id}'" : '',
+			'person_id' => '(SELECT COUNT(id) from persons)'
+		);
+
+		$sql = 'INSERT INTO employees ('.(implode(array_keys($employee), ',')).') VALUES ('.(implode(',', $employee)).')';
+
+		$this->execute($sql);
 	}
 
     /**
