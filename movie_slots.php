@@ -4,7 +4,7 @@ require_once 'DB.php';
 $db = new DB();
 
 if( isset($_POST['movie_slot']) ) {
-	$db->movieSave($_POST['movie_slot']);
+	$db->movieSlotSave($_POST['movie_slot']);
 }
 
 $movieSlots = $db->movieSlotGetAll();
@@ -14,22 +14,22 @@ $movieSlotTable = '';
 while ($row = oci_fetch_assoc($movieSlots)) {
 	$movieSlotTable .= "<tr>";
 	$movieSlotTable .= "<td>" . $row['ID'] . "</td>";
-	$movieSlotTable .= "<td>" . $row['NAME']  ."</td>";
 	$movieSlotTable .= "<td>" . $row['MOVIE_ID'] ."</td>";
 	$movieSlotTable .= "<td>" . $row['ROOM_ID'] ."</td>";
+	$movieSlotTable .= "<td>" . $row['START_AT']  ."</td>";
 	$movieSlotTable .= "</tr>";
 	$movieSlotsCount++;
 }
 
 $movies = $db->movieGetAll();
-$moviesSelect = '<select id="movie" name="movie_slot[movie]">';
+$moviesSelect = '<select id="movie" name="movie_slot[movie_id]">';
 while ($row = oci_fetch_assoc($movies)) {
 	$moviesSelect .= '<option value="'.$row['ID'].'">'.$row['TITLE'].'</option>';
 }
 $moviesSelect .= '</select>';
 
 $rooms = $db->roomGetAll();
-$roomsSelect = '<select id="room" name="movie_slot[room]">';
+$roomsSelect = '<select id="room" name="movie_slot[room_id]">';
 while ($row = oci_fetch_assoc($rooms)) {
 	$roomsSelect .= '<option value="'.$row['ID'].'">'.$row['NAME'].'</option>';
 }
@@ -50,7 +50,7 @@ include 'header.php';
 				<label for="room">Room</label>
 			</div>
 			<div class="input-field col s12">
-				<input name="movie_slot[start_at]" id="start_at" type="text" class="validate" required>
+				<input name="movie_slot[start_at]" id="start_at" type="text" class="validate" value="<?php echo date('Y-m-d H:i') ?>" required>
 				<label for="start_at">Start at</label>
 			</div>
 	  		<div class="col s12 text-right">
@@ -64,9 +64,9 @@ include 'header.php';
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>Name</th>
 					<th>Movie ID</th>
 					<th>Room ID</th>
+					<th>Start at</th>
 				</tr>
 			</thead>
 			<tbody>

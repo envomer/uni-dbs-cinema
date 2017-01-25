@@ -168,6 +168,26 @@ class DB
 	}
 
 	/**
+     * Save movie
+     *
+     * @param $movie
+     */
+	public function movieSave($movie)
+	{
+		$movie = (object) $movie;
+
+		$movie = array(
+			'title' => isset($movie->title) ? "'{$movie->title}'" : '',
+			'duration' => isset($movie->duration) ? "{$movie->duration}" : '',
+			'image' => isset($movie->image) ? "'{$movie->image}'" : '',
+		);
+
+		$sql = 'INSERT INTO movies ('.(implode(array_keys($movie), ',')).') VALUES ('.(implode(',', $movie)).')';
+
+		$this->execute($sql);
+	}
+
+	/**
      * Get all movie slots
      *
      * @param null $search
@@ -189,23 +209,22 @@ class DB
 		return $this->select($command);
 	}
 
-    /**
-     * Save movie
+	/**
+     * Save Slot
      *
-     * @param $movie
+     * @param $Slot
      */
-	public function movieSave($movie)
+	public function movieSlotSave($movieSlot)
 	{
-		$movie = (object) $movie;
+		$movieSlot = (object) $movieSlot;
 
-		$movie = array(
-			'id' => 'seq_movies_auto_increment.nextval',
-			'title' => isset($movie->title) ? "'{$movie->title}'" : '',
-			'duration' => isset($movie->duration) ? "{$movie->duration}" : '',
-			'image' => isset($movie->image) ? "'{$movie->image}'" : '',
+		$movieSlot = array(
+			'movie_id' => isset($movieSlot->movie_id) ? "'{$movieSlot->movie_id}'" : '',
+			'room_id' => isset($movieSlot->room_id) ? "{$movieSlot->room_id}" : '',
+			'start_at' => isset($movieSlot->start_at) ? "to_date('{$movieSlot->start_at}', 'YYYY-MM-DD HH24:MI','NLS_DATE_LANGUAGE=AMERICAN')" : '',
 		);
 
-		$sql = 'INSERT INTO movies ('.(implode(array_keys($movie), ',')).') VALUES ('.(implode(',', $movie)).')';
+		$sql = 'INSERT INTO movie_slots ('.(implode(array_keys($movieSlot), ',')).') VALUES ('.(implode(',', $movieSlot)).')';
 
 		$this->execute($sql);
 	}

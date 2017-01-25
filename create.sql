@@ -4,8 +4,9 @@ CREATE TABLE cinemas (
   cinema_name VARCHAR(20) NOT NULL, 
   street VARCHAR(20) NOT NULL, 
   zip NUMBER(20) NOT NULL, 
-  city VARCHAR(20) DEFAULT '', 
-  PRIMARY KEY (id) 
+  city VARCHAR(20) DEFAULT '',
+  PRIMARY KEY (id),
+  CONSTRAINT cinema_constraint_zip CHECK (zip < 10000)
 );
 
 CREATE TABLE persons (
@@ -166,10 +167,12 @@ END;
 
 
 
--- CREATE VIEW movies_top AS
---   SELECT m.title, SUM(m.id)
---   FROM movies m INNER JOIN movie_slots s ON s.movie_id = m.id
--- GROUP BY m.id ORDER BY m.id;
+CREATE VIEW movies_top AS
+  SELECT m.title, SUM(m.id), m.id
+  FROM movies m
+    INNER JOIN movie_slots s ON s.movie_id = m.id
+  GROUP BY m.id, m.title
+  ORDER BY m.id DESC;
 
 
 
