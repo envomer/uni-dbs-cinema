@@ -21,7 +21,7 @@ CREATE TABLE persons (
 CREATE TABLE customers (
   id NUMBER(20) NOT NULL, 
   email VARCHAR(20) NOT NULL, 
-  password VARCHAR(20) NOT NULL, 
+  password VARCHAR(64) NOT NULL, 
   person_id NUMBER(20) NOT NULL, 
   PRIMARY KEY (id), 
   CONSTRAINT customer_fk_person_id FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE

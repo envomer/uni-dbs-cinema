@@ -42,7 +42,7 @@ class DB
      *
      * @param $statement
      */
-	public function execute($statement)
+	public function execute($statement, $redirect = true)
 	{
 		$insert = oci_parse($this->connection, $statement);
    		oci_execute($insert);
@@ -51,8 +51,10 @@ class DB
 		$insert_err = oci_error($insert);
 		if(!$conn_err && !$insert_err){
 			oci_free_statement($insert);
-			header('Location: '.$_SERVER['PHP_SELF']);
-			die;
+			if($redirect) {
+				header('Location: '.$_SERVER['PHP_SELF']);
+				die;
+			}
 		}
 		else{
 			echo '<pre>';
@@ -117,10 +119,37 @@ class DB
 						ORDER BY c.id DESC';
 		}
 		else {
-			$command = "SELECT * FROM customers ORDER BY id DESC";
+			$command = "SELECT c.*, p.name, p.street, p.zip, p.city
+						FROM customers c
+						LEFT JOIN persons p ON p.id = c.person_id
+						ORDER BY c.id DESC";
 		}
 
 		return $this->select($command);
+	}
+
+	/**
+     * Save customer
+     *
+     * @param $customer
+     */
+	public function customerSave($customer)
+	{
+		$customer = (object) $customer;
+
+		$this->personSave($customer);
+
+		$hashedPassword = isset($customer->password) ? md5($customer->password) : null;
+
+		$customer = array(
+			'email' => isset($customer->email) ? "'{$customer->email}'" : '',
+			'password' => isset($customer->password) ? "'{$hashedPassword}'" : '',
+			'person_id' => '(SELECT COUNT(id) from persons)'
+		);
+
+		$sql = 'INSERT INTO customers ('.(implode(array_keys($customer), ',')).') VALUES ('.(implode(',', $customer)).')';
+
+		$this->execute($sql);
 	}
 
 	/**
@@ -227,6 +256,27 @@ class DB
 		$sql = 'INSERT INTO movie_slots ('.(implode(array_keys($movieSlot), ',')).') VALUES ('.(implode(',', $movieSlot)).')';
 
 		$this->execute($sql);
+	}
+
+	/**
+     * Save person
+     *
+     * @param $person
+     */
+	public function personSave($person)
+	{
+		$person = (object) $person;
+
+		$person = array(
+			'street' => isset($person->street) ? "'{$person->street}'" : '',
+			'zip' => isset($person->zip) ? "'{$person->zip}'" : '',
+			'city' => isset($person->city) ? "'{$person->city}'" : '',
+			'name' => isset($person->name) ? "'{$person->name}'" : '',
+		);
+
+		$sql = 'INSERT INTO persons ('.(implode(array_keys($person), ',')).') VALUES ('.(implode(',', $person)).')';
+
+		return $this->execute($sql, false);
 	}
 
 	/**
