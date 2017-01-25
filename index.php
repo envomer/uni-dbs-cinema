@@ -78,7 +78,7 @@ include 'header.php';
 		      <label for="ticket_employee_id">Employee</label>
 		  </div>
 			<div class="input-field col s12">
-				<input name="ticket[purchased_at]" id="purchased_at" type="text" class="validate" required value="<?php echo date('Y-m-d H:i:s') ?>">
+				<input name="ticket[purchased_at]" id="purchased_at" type="text" class="validate" required value="<?php echo date('Y-m-d H:i') ?>">
 				<label for="purchased_at">Gekauft am</label>
 			</div>
 		  <div class="col s12 text-right">

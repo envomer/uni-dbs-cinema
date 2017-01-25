@@ -390,6 +390,7 @@ class DB
 			'price' => isset($ticket->price) ? "{$ticket->price}" : '',
 			'seat' => isset($ticket->seat) ? "{$ticket->seat}" : '',
 			'row_nr' => isset($ticket->row_nr) ? "{$ticket->row_nr}" : '',
+			'purchased_at' => isset($ticket->purchased_at) ? "to_date('{$ticket->purchased_at}', 'YYYY-MM-DD HH24:MI','NLS_DATE_LANGUAGE=AMERICAN')" : 'NULL',
 		);
 
 		$sql = 'INSERT INTO tickets ('.(implode(array_keys($ticket), ',')).') VALUES ('.(implode(',', $ticket)).')';

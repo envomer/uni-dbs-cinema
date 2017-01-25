@@ -15,9 +15,9 @@ public class TestDataGenerator
 			Statement stmt = con.createStatement();
 
 			try {
-				for (int i=0; i < 100; i++){
+				for (int i=1; i < 1000; i++){
 					String insertSql =  "";
-					
+
 	  				insertSql = "INSERT INTO persons (street, zip, city, name) VALUES ('Street "+i+"', '3098"+i+"','City "+i+"', 'Person "+i+"')";
 	  				stmt.executeUpdate(insertSql);
 
