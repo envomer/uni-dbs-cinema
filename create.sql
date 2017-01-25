@@ -8,7 +8,6 @@ CREATE TABLE cinemas (
   PRIMARY KEY (id) 
 );
 
-
 CREATE TABLE persons (
   id NUMBER(20) NOT NULL, 
   street VARCHAR(255) DEFAULT NULL, 
@@ -18,7 +17,6 @@ CREATE TABLE persons (
   PRIMARY KEY (id) 
 );
 
-
 CREATE TABLE customers (
   id NUMBER(20) NOT NULL, 
   email VARCHAR(20) NOT NULL, 
@@ -27,8 +25,6 @@ CREATE TABLE customers (
   PRIMARY KEY (id), 
   CONSTRAINT customer_fk_person_id FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
 );
-
-
 
 CREATE TABLE employees (
   id NUMBER(20) NOT NULL,
@@ -41,22 +37,12 @@ CREATE TABLE employees (
   CONSTRAINT employee_fk_person_id FOREIGN KEY (person_id) REFERENCES persons (id) ON DELETE CASCADE
 );
 
-
 CREATE TABLE movies (
   id NUMBER(20) NOT NULL,
   title VARCHAR(50) NOT NULL,
   duration NUMBER(5) NOT NULL,
   image VARCHAR(255),
   PRIMARY KEY (id)
-);
-
-
-CREATE TABLE rooms (
-  id NUMBER(20) NOT NULL,
-  cinema_id NUMBER(20) NOT NULL,
-  name VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (id),
-  CONSTRAINT room_fk_cinema_id FOREIGN KEY (cinema_id) REFERENCES cinemas (id) ON DELETE CASCADE
 );
 
 CREATE TABLE rooms (
@@ -85,7 +71,6 @@ CREATE TABLE movie_slots (
   CONSTRAINT movieslot_fk_movie_id FOREIGN KEY (movie_id) REFERENCES movies (id) ON DELETE CASCADE,
   CONSTRAINT movieslot_fk_room_id FOREIGN KEY (room_id) REFERENCES rooms (id) ON DELETE CASCADE
 );
-
 
 CREATE TABLE tickets (
   id NUMBER(20) NOT NULL,
@@ -172,7 +157,11 @@ END;
 
 
 
-
+-- CREATE OR REPLACE PROCEDURE name_abt(nn IN VARCHAR2, abt OUT NUMBER) IS
+-- BEGIN
+--   Select a.abtnr INTO abt from person p,mitarbeiter m ,abteilung a
+--   where p.nachname=nn AND p.svnr=m.svnr AND m.arbeitet=a.abtnr;
+-- END;
 
 
 

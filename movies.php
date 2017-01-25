@@ -7,27 +7,19 @@ if( isset($_POST['movie']) ) {
 	$db->movieSave($_POST['movie']);
 }
 
-// $movies = $db->movieGetAll();
-// // $movieslots = $db->movieSlotGetAll();
-// $customers = $db->customerGetAll();
-// $employees = $db->employeeGetAll();
-// $rooms = $db->roomGetAll();
-$tickets = $db->ticketGetAll();
-$ticketsCount = 0;
+$movies = $db->movieGetAll();
+$moviesCount = 0;
 
-$ticketsTable = '';
-while ($row = oci_fetch_assoc($tickets)) {
-	$ticketsTable .= "<tr>";
-	$ticketsTable .= "<td>" . $row['ID'] . "</td>";
-	$ticketsTable .= "<td>" . $row['PURCHASED_AT']  ."</td>";
-	$ticketsTable .= "<td>" . $row['SEAT'] ."</td>";
-	$ticketsTable .= "<td>" . $row['MOVIE_TITLE'] ."</td>";
-	$ticketsTable .= "<td>" . $row['MOVIE_NAME'] ."</td>";
-	$ticketsTable .= "<td>" . $row['CUSTOMER_NAME'] ."</td>";
-	$ticketsTable .= "</tr>";
-	$ticketsCount++;
+$moviesTable = '';
+while ($row = oci_fetch_assoc($movies)) {
+	$moviesTable .= "<tr>";
+	$moviesTable .= "<td>" . $row['ID'] . "</td>";
+	$moviesTable .= "<td>" . $row['TITLE']  ."</td>";
+	$moviesTable .= "<td>" . $row['IMAGE'] ."</td>";
+	$moviesTable .= "<td>" . $row['DURATION'] ."</td>";
+	$moviesTable .= "</tr>";
+	$moviesCount++;
 }
-
 
 include 'header.php';
 ?>
@@ -53,25 +45,23 @@ include 'header.php';
 		</form>
 	</div>
 
-	<?php if( $ticketsCount ) : ?>
+	<?php if( $moviesCount ) : ?>
 		<table>
 			<thead>
 				<tr>
 					<th>ID</th>
-					<th>PURCHASED_AT</th>
-					<th>SEAT</th>
-					<th>MOVIE_TITLE</th>
-					<th>MOVIE_NAME</th>
-					<th>CUSTOMER_NAME</th>
+					<th>Titel</th>
+					<th>Bild</th>
+					<th>Laufzeit</th>
 				</tr>
 			</thead>
 			<tbody>
-			<?php echo $ticketsTable ?>
+			<?php echo $moviesTable ?>
 			</tbody>
 		</table>
 		
-		<div class="count">Insgesamt <?php echo $ticketsCount; ?> Filme(s) gefunden!</div>
+		<div class="count">Insgesamt <?php echo $moviesCount; ?> Filme(s) gefunden!</div>
 	<?php endif; ?>
 </div>
 
-<?php include 'footer.php' ?>
+<?php include 'footer.php'; ?>
